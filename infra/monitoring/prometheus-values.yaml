@@ -1,0 +1,22 @@
+# infra/monitoring/prometheus-values.yaml
+alertmanager:
+  enabled: true
+
+server:
+  persistentVolume:
+    enabled: false
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/scheme: internet-facing
+    hosts:
+      - prometheus.devops-portfolio.local
+
+pushgateway:
+  enabled: false
+
+rbac:
+  create: true
