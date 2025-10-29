@@ -19,3 +19,11 @@ spec:
         image: sudomyous/myapp:latest
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config/settings.yaml
+          subPath: settings.yaml
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
