@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: devops-portfolio
+data:
+  settings.yaml: |
+    app:
+      name: devops-portfolio
+      environment: production
+      version: "1.0.0"
+      maintainer: "omar ysf"
+      log_level: INFO
+
+    server:
+      port: 80
+
+    monitoring:
+      enabled: true
+      endpoint: /health
