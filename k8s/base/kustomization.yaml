@@ -1,0 +1,6 @@
+resources:
+  - base/deployment.yaml
+  - base/service.yaml
+  - base/hpa.yaml
+  - base/ingress-alb.yaml
+  - sealed-secret.yaml
