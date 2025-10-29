@@ -1,0 +1,16 @@
+# Secrets
+.env
+*.pem
+
+# Python / Node / other
+__pycache__/
+*.pyc
+node_modules/
+
+# Terraform
+.terraform/
+terraform.tfstate*
+*.tfvars
+
+# Docker
+*.log
