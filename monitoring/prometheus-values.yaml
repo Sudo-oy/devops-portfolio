@@ -1,0 +1,41 @@
+# Values for the prometheus-community/prometheus Helm chart:
+#   helm upgrade --install prometheus prometheus-community/prometheus \
+#     -n monitoring --create-namespace -f monitoring/prometheus-values.yaml
+alertmanager:
+  enabled: true
+
+server:
+  retention: 7d
+  persistentVolume:
+    enabled: true
+    size: 20Gi
+  service:
+    type: ClusterIP
+
+prometheus-pushgateway:
+  enabled: false
+
+rbac:
+  create: true
+
+serverFiles:
+  alerting_rules.yml:
+    groups:
+      - name: devops-portfolio
+        rules:
+          - alert: WebHighErrorRate
+            expr: |
+              sum(rate(http_requests_total{namespace="devops-portfolio",status=~"5.."}[5m]))
+                / sum(rate(http_requests_total{namespace="devops-portfolio"}[5m])) > 0.05
+            for: 10m
+            labels:
+              severity: critical
+            annotations:
+              summary: More than 5% of requests fail
+          - alert: WebPodCrashLooping
+            expr: increase(kube_pod_container_status_restarts_total{namespace="devops-portfolio"}[15m]) > 3
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Pod {{ $labels.pod }} restarts repeatedly"
