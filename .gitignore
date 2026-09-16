@@ -1,16 +1,39 @@
-# Secrets
-.env
-*.pem
-
-# Python / Node / other
+# Python
 __pycache__/
-*.pyc
-node_modules/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
-# Terraform
+# Rendered manifests and scanner output
+rendered.yaml
+.rendered/
+*.sarif
+
+# Terraform (if infrastructure code is added locally)
 .terraform/
-terraform.tfstate*
+*.tfstate
+*.tfstate.*
 *.tfvars
 
-# Docker
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+kubeconfig
+*.kubeconfig
+
+# Logs
 *.log
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
