@@ -1,0 +1,10 @@
+# Checkov configuration for the rendered Kubernetes manifests and the Dockerfile.
+compact: true
+quiet: true
+skip-check:
+  # CPU limits are intentionally omitted to avoid CFS throttling; CPU requests and the HPA bound usage.
+  - CKV_K8S_11
+  # Images are referenced by immutable version tags set by CI; digest pinning is on the roadmap.
+  - CKV_K8S_43
+  # With immutable tags, IfNotPresent is correct and avoids a registry round-trip per pod start.
+  - CKV_K8S_15
