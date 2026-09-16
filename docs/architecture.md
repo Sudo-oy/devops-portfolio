@@ -43,11 +43,11 @@ sequenceDiagram
 ## Infrastructure
 
 The AWS foundation (VPC, EKS, ECR, optional RDS) is provisioned with the reusable
-[eks-terraform-iac](https://github.com/Sudo-oy/eks-terraform-iac) module:
+[terraform-aws-eks-platform](https://github.com/Sudo-oy/terraform-aws-eks-platform) module:
 
 ```hcl
 module "platform" {
-  source = "github.com/Sudo-oy/eks-terraform-iac?ref=v0.1.0"
+  source = "github.com/Sudo-oy/terraform-aws-eks-platform?ref=v0.1.0"
 
   name             = "portfolio"
   ecr_repositories = ["devops-portfolio"]

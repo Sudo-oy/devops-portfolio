@@ -9,7 +9,7 @@
 
 ## Infrastructure as code
 
-- **Terraform** with community modules pinned to exact versions, wrapped in a typed, tested module ([eks-terraform-iac](https://github.com/Sudo-oy/eks-terraform-iac)).
+- **Terraform** with community modules pinned to exact versions, wrapped in a typed, tested module ([terraform-aws-eks-platform](https://github.com/Sudo-oy/terraform-aws-eks-platform)).
 - **tflint**, **checkov** and **terraform-docs** in CI; `terraform test` with a mocked AWS provider so tests need no cloud account.
 
 ## Containers
