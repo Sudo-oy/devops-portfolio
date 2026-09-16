@@ -1,24 +1,20 @@
-# ---------------------
-# 🏗️ Stage 1: Build
-# ---------------------
-FROM python:3.11-slim AS builder
+# syntax=docker/dockerfile:1
 
-WORKDIR /app
+FROM python:3.12-slim AS builder
+WORKDIR /build
 COPY requirements.txt .
-RUN pip install --user -r requirements.txt
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 
-# ---------------------
-# 🚀 Stage 2: Runtime
-# ---------------------
-FROM python:3.11-slim
-
+FROM python:3.12-slim
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PORT=8080
 WORKDIR /app
-COPY --from=builder /root/.local /root/.local
-COPY . .
-
-ENV PATH=/root/.local/bin:$PATH
-ENV APP_ENV=production
-ENV PORT=80
-
-EXPOSE 80
-CMD ["python", "app.py"]
+RUN groupadd --system --gid 10001 app \
+    && useradd --system --uid 10001 --gid app --no-create-home app
+COPY --from=builder /install /usr/local
+COPY app.py .
+USER 10001:10001
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=3s CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz')"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--access-logfile", "-", "app:app"]
