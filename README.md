@@ -17,7 +17,7 @@ This repository is the entry point to my open source work. It has two parts: an 
 
 | Project | What it does | Highlights |
 |---|---|---|
-| [**eks-terraform-iac**](https://github.com/Sudo-oy/eks-terraform-iac) | Terraform module that ships an Amazon EKS cluster, its VPC, ECR repositories and an optional private PostgreSQL database in one `module` block | Typed and validated inputs, Secrets Manager-managed DB password, `terraform test` with a mocked provider, tflint + checkov + terraform-docs in CI |
+| [**terraform-aws-eks-platform**](https://github.com/Sudo-oy/terraform-aws-eks-platform) | Terraform module that ships an Amazon EKS cluster, its VPC, ECR repositories and an optional private PostgreSQL database in one `module` block | Typed and validated inputs, Secrets Manager-managed DB password, `terraform test` with a mocked provider, tflint + checkov + terraform-docs in CI |
 | [**k8s-sre-agent**](https://github.com/Sudo-oy/k8s-sre-agent) | Read-only CLI that diagnoses a broken Kubernetes namespace and writes a root cause analysis | 8 deterministic detectors with symptom/cause correlation, pluggable LLM providers (Anthropic, OpenAI-compatible, Ollama), secret redaction, reproducible kind demo tested in CI |
 | **devops-portfolio** (this repo) | Reference delivery platform | Hardened container, Kustomize manifests (restricted Pod Security, NetworkPolicy, HPA, PDB), RED metrics, alerting rules and Grafana dashboard |
 
@@ -31,7 +31,7 @@ flowchart LR
     gha["lint · tests · hadolint<br/>kubeconform · checkov · gitleaks"] --> img["container image"]
   end
 
-  subgraph AWS["AWS (provisioned by eks-terraform-iac)"]
+  subgraph AWS["AWS (provisioned by terraform-aws-eks-platform)"]
     ecr[(ECR)]
     subgraph EKS["Amazon EKS"]
       subgraph NS["namespace devops-portfolio"]

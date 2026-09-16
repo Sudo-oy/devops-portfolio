@@ -24,7 +24,7 @@ kubectl -n devops-portfolio describe ingress web
 kubectl -n kube-system logs deploy/aws-load-balancer-controller
 ```
 
-Public subnets must carry the `kubernetes.io/role/elb=1` tag (set by eks-terraform-iac).
+Public subnets must carry the `kubernetes.io/role/elb=1` tag (set by terraform-aws-eks-platform).
 
 ## Monitoring
 
