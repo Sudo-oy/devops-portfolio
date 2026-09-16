@@ -1,0 +1,20 @@
+# Alertmanager configuration. The Slack webhook URL is read from a file mounted
+# from a Kubernetes Secret, so it never appears in this repository:
+#   kubectl -n monitoring create secret generic alertmanager-slack \
+#     --from-literal=webhook-url="$SLACK_WEBHOOK_URL"
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ["alertname", "namespace"]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+  receiver: slack-notifications
+
+receivers:
+  - name: slack-notifications
+    slack_configs:
+      - api_url_file: /etc/alertmanager/secrets/alertmanager-slack/webhook-url
+        channel: "#alerts"
+        send_resolved: true
