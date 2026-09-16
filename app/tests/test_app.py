@@ -32,3 +32,10 @@ def test_metrics_expose_request_counter(client: FlaskClient) -> None:
 
 def test_unknown_route_returns_404(client: FlaskClient) -> None:
     assert client.get("/does-not-exist").status_code == 404
+
+
+def test_unknown_route_metrics_use_unknown_endpoint_label(client: FlaskClient) -> None:
+    client.get("/does-not-exist")
+    response = client.get("/metrics")
+    assert response.status_code == 200
+    assert b'http_requests_total{endpoint="unknown",method="GET",status="404"}' in response.data
