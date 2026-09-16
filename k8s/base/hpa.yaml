@@ -1,14 +1,12 @@
-# k8s/hpa.yaml
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: app-hpa
-  namespace: devops-portfolio
+  name: web
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: app-deployment
+    name: web
   minReplicas: 2
   maxReplicas: 5
   metrics:
@@ -17,4 +15,4 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 50
+          averageUtilization: 70
